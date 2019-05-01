@@ -1,16 +1,18 @@
 package classes
 
-type pet struct {
-	id       int64
-	category string
-	name     string
-	status   status
+type Pet struct {
+	Id       int64
+	Category string
+	Name     string
+	Status   StatusPet
 }
 
-type status int
+type Pets []Pet
+
+type StatusPet int
 
 const (
-	available status = iota
-	pending
-	sold
+	Available StatusPet = iota
+	Pending
+	Sold
 )

@@ -18,3 +18,14 @@
 
 # Environment
 .env
+
+
+### Ignore all binaries
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
