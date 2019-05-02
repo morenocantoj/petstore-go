@@ -4,22 +4,20 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/morenocantoj/petstore-go/internal/app/database"
 	"github.com/morenocantoj/petstore-go/internal/app/types/classes"
 	"github.com/morenocantoj/petstore-go/internal/pkg/utils/errors"
 )
 
 type PetsController struct{}
 
-func (c *PetsController) Index(w http.ResponseWriter, r *http.Request) {
-	mockPet := classes.Pet{
-		Id:       1,
-		Category: "dog",
-		Name:     "Rudolf",
-		Status:   classes.Available,
-	}
-	mockPets := classes.Pets{mockPet}
-	responseJson, err := json.Marshal(&mockPets)
-	errors.Check(err)
+func (c *PetsController) Index(writter http.ResponseWriter, req *http.Request) {
+	db := database.Connector{Connection: database.ConnectToDatabase()}
+	defer db.Connection.Close()
 
-	w.Write(responseJson)
+	pets := db.Connection.Find(&classes.Pets{}).Value
+
+	responseJson, err := json.Marshal(&pets)
+	errors.Check(err)
+	writter.Write(responseJson)
 }
