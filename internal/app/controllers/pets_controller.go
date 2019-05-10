@@ -21,9 +21,15 @@ func (c *PetsController) Index(writter http.ResponseWriter, req *http.Request) {
 	db := database.Connector{Connection: database.ConnectToDatabase()}
 	defer db.Connection.Close()
 
-	pets := db.Connection.Find(&classes.Pets{}).Value
+	pets := classes.Pets{}
+	db.Connection.Find(&pets)
+	petsResponse := responses.PetsOK{
+		Code:         200,
+		Pets:         pets,
+		CreatePetURL: req.Host + "/pets",
+	}
 
-	responseJSON, err := json.Marshal(&pets)
+	responseJSON, err := json.Marshal(&petsResponse)
 	errors.Check(err)
 	writter.Write(responseJSON)
 }
