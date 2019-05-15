@@ -3,7 +3,11 @@ module github.com/morenocantoj/petstore-go
 go 1.12
 
 require (
+	4d63.com/gochecknoglobals v0.0.0-20190306162314-7c3491d2b6ec // indirect
+	4d63.com/gochecknoinits v0.0.0-20180528051558-14d5915061e5 // indirect
 	cloud.google.com/go v0.38.0 // indirect
+	github.com/alexflint/go-arg v1.0.0 // indirect
+	github.com/alexkohler/nakedret v0.0.0-20190321114339-98ae56e4e0f3 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.3.0 // indirect
@@ -11,6 +15,7 @@ require (
 	github.com/gorilla/mux v1.7.1
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/jinzhu/gorm v1.9.5
+	github.com/walle/lll v0.0.0-20160702150637-8b13b3fbf731 // indirect
 	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734 // indirect
 	golang.org/x/exp v0.0.0-20190429183610-475c5042d3f1 // indirect
 	golang.org/x/image v0.0.0-20190501045829-6d32002ffd75 // indirect

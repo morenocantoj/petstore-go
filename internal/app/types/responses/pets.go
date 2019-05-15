@@ -10,7 +10,13 @@ type PetCreatedOK struct {
 	PetURL  string      `json:"pet_url"`
 }
 
-// PetsOK returns a 200 OK with a list of pets
+// PetOK returns a 200 OK with the pet found
+type PetOK struct {
+	Code int32       `json:"code"`
+	Pet  classes.Pet `json:"pet"`
+}
+
+// PetsOK returns a 201 OK with a list of pets
 type PetsOK struct {
 	Code         int32        `json:"code"`
 	Pets         classes.Pets `json:"pets"`
