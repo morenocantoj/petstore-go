@@ -9,3 +9,8 @@ type NotFound struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
+
+type ServerError struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}

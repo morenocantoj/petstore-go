@@ -91,3 +91,45 @@ func (c *PetsController) Create(writter http.ResponseWriter, req *http.Request) 
 	errors.Check(err)
 	c.writeResponse(responseJSON, writter, http.StatusOK)
 }
+
+// Destroy an existing pet
+func (c *PetsController) Destroy(writter http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	petID := params["id"]
+	fmt.Printf("DELETE /pets/%s\n", petID)
+
+	if petID != "" {
+		db := database.Connector{Connection: database.ConnectToDatabase()}
+		defer db.Connection.Close()
+
+		petID, _ := strconv.ParseInt(petID, 10, 64)
+		pet := classes.Pet{ID: petID}
+
+		err := db.Connection.Delete(&pet)
+		if err != nil {
+			petDestroyedResponse := responses.PetDestroyedOK{
+				Code:    200,
+				Message: "Pet deleted succesfully",
+				PetsURL: req.Host + "/pets",
+			}
+			responseJSON, err := json.Marshal(&petDestroyedResponse)
+			errors.Check(err)
+			c.writeResponse(responseJSON, writter, http.StatusOK)
+
+		} else {
+			serverErrorResponse := responses.ServerError{
+				Code:    500,
+				Message: "Error al borrar la mascota",
+			}
+			responseJSON, err := json.Marshal(&serverErrorResponse)
+			errors.Check(err)
+			c.writeResponse(responseJSON, writter, http.StatusInternalServerError)
+		}
+
+	} else {
+		response := responses.BadRequest{Code: 400, Message: "El id introducido no es válido"}
+		responseJSON, err := json.Marshal(&response)
+		errors.Check(err)
+		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
+	}
+}
