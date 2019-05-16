@@ -15,6 +15,10 @@ require (
 	github.com/gorilla/mux v1.7.1
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/jinzhu/gorm v1.9.5
+	github.com/kisielk/gotool v1.0.0 // indirect
+	github.com/mibk/dupl v1.0.0 // indirect
+	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
+	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect
 	github.com/walle/lll v0.0.0-20160702150637-8b13b3fbf731 // indirect
 	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734 // indirect
 	golang.org/x/exp v0.0.0-20190429183610-475c5042d3f1 // indirect
@@ -31,4 +35,6 @@ require (
 	google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb // indirect
 	google.golang.org/grpc v1.20.1 // indirect
 	honnef.co/go/tools v0.0.0-20190418001031-e561f6794a2a // indirect
+	mvdan.cc/interfacer v0.0.0-20180901003855-c20040233aed // indirect
+	mvdan.cc/lint v0.0.0-20170908181259-adc824a0674b // indirect
 )
