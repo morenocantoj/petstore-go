@@ -105,26 +105,16 @@ func (c *PetsController) Destroy(writter http.ResponseWriter, req *http.Request)
 		petID, _ := strconv.ParseInt(petID, 10, 64)
 		pet := classes.Pet{ID: petID}
 
-		err := db.Connection.Delete(&pet)
-		if err != nil {
-			petDestroyedResponse := responses.PetDestroyedOK{
-				Code:    200,
-				Message: "Pet deleted succesfully",
-				PetsURL: req.Host + "/pets",
-			}
-			responseJSON, err := json.Marshal(&petDestroyedResponse)
-			errors.Check(err)
-			c.writeResponse(responseJSON, writter, http.StatusOK)
+		db.Connection.Delete(&pet)
 
-		} else {
-			serverErrorResponse := responses.ServerError{
-				Code:    500,
-				Message: "Error al borrar la mascota",
-			}
-			responseJSON, err := json.Marshal(&serverErrorResponse)
-			errors.Check(err)
-			c.writeResponse(responseJSON, writter, http.StatusInternalServerError)
+		petDestroyedResponse := responses.PetDestroyedOK{
+			Code:    200,
+			Message: "Pet deleted succesfully",
+			PetsURL: req.Host + "/pets",
 		}
+		responseJSON, err := json.Marshal(&petDestroyedResponse)
+		errors.Check(err)
+		c.writeResponse(responseJSON, writter, http.StatusOK)
 
 	} else {
 		response := responses.BadRequest{Code: 400, Message: "El id introducido no es válido"}
