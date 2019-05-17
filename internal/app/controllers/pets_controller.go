@@ -123,3 +123,40 @@ func (c *PetsController) Destroy(writter http.ResponseWriter, req *http.Request)
 		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
 	}
 }
+
+// Update a existing pet
+func (c *PetsController) Update(writter http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	petID := params["id"]
+	fmt.Printf("PATCH /pets/%s\n", petID)
+
+	if petID != "" {
+		pet := classes.NewPetFromBody(req)
+		pet.ID, _ = strconv.ParseInt(petID, 10, 64)
+		db := database.Connector{Connection: database.ConnectToDatabase()}
+		defer db.Connection.Close()
+
+		if db.Connection.Model(&pet).Where("id = ?", pet.ID).Update(&pet).RowsAffected > 0 {
+			response := responses.PetUpdatedOK{
+				Code:    200,
+				Message: "Pet updated successfully",
+				PetsURL: req.Host + "/pets",
+			}
+			responseJSON, err := json.Marshal(&response)
+			errors.Check(err)
+			c.writeResponse(responseJSON, writter, http.StatusOK)
+
+		} else {
+			response := responses.NotFound{Code: 404, Message: "Pet not found"}
+			responseJSON, err := json.Marshal(&response)
+			errors.Check(err)
+			c.writeResponse(responseJSON, writter, http.StatusNotFound)
+		}
+
+	} else {
+		response := responses.BadRequest{Code: 400, Message: "Invalid id"}
+		responseJSON, err := json.Marshal(&response)
+		errors.Check(err)
+		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
+	}
+}

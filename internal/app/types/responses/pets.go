@@ -23,6 +23,13 @@ type PetDestroyedOK struct {
 	PetsURL string `json:"pets_url"`
 }
 
+// PetUpdatedOK returns a 200 OK if the pet is updated succesfully
+type PetUpdatedOK struct {
+	Code    int32  `json:"code"`
+	Message string `json:"message"`
+	PetsURL string `json:"pets_url"`
+}
+
 // PetsOK returns a 200 OK with a list of pets
 type PetsOK struct {
 	Code         int32        `json:"code"`

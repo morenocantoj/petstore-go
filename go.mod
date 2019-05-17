@@ -6,6 +6,7 @@ require (
 	4d63.com/gochecknoglobals v0.0.0-20190306162314-7c3491d2b6ec // indirect
 	4d63.com/gochecknoinits v0.0.0-20180528051558-14d5915061e5 // indirect
 	cloud.google.com/go v0.38.0 // indirect
+	github.com/alecthomas/gocyclo v0.0.0-20150208221726-aa8f8b160214 // indirect
 	github.com/alexflint/go-arg v1.0.0 // indirect
 	github.com/alexkohler/nakedret v0.0.0-20190321114339-98ae56e4e0f3 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
@@ -16,6 +17,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/jinzhu/gorm v1.9.5
 	github.com/kisielk/gotool v1.0.0 // indirect
+	github.com/mdempsky/maligned v0.0.0-20180708014732-6e39bd26a8c8 // indirect
 	github.com/mibk/dupl v1.0.0 // indirect
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
 	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect

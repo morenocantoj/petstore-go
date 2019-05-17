@@ -35,6 +35,7 @@ func defineRoutes(router *mux.Router) {
 	router.HandleFunc("/pets", PetsController.Index).Methods("GET")
 	router.HandleFunc("/pets/{id}", PetsController.Show).Methods("GET")
 	router.HandleFunc("/pets/{id}", PetsController.Destroy).Methods("DELETE")
+	router.HandleFunc("/pets/{id}", PetsController.Update).Methods("PATCH")
 	router.HandleFunc("/pets", PetsController.Create).Methods("POST")
 }
 
