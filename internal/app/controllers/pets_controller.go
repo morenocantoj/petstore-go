@@ -49,7 +49,9 @@ func (c *PetsController) Show(writter http.ResponseWriter, req *http.Request) {
 		defer db.Connection.Close()
 
 		if db.Connection.Where("id = ?", petID).First(&pet).RecordNotFound() {
-			response := responses.NotFound{Code: 404, Message: "La mascota que buscas no se encuentra"}
+			response := responses.NotFound{
+				HttpError: responses.HttpError{Code: 404, Message: "Pet not found"},
+			}
 			responseJSON, err := json.Marshal(&response)
 			errors.Check(err)
 			c.writeResponse(responseJSON, writter, http.StatusNotFound)
@@ -62,7 +64,9 @@ func (c *PetsController) Show(writter http.ResponseWriter, req *http.Request) {
 		}
 
 	} else {
-		response := responses.BadRequest{Code: 400, Message: "El id introducido no es válido"}
+		response := responses.BadRequest{
+			HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"},
+		}
 		responseJSON, err := json.Marshal(&response)
 		errors.Check(err)
 		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
@@ -117,7 +121,9 @@ func (c *PetsController) Destroy(writter http.ResponseWriter, req *http.Request)
 		c.writeResponse(responseJSON, writter, http.StatusOK)
 
 	} else {
-		response := responses.BadRequest{Code: 400, Message: "El id introducido no es válido"}
+		response := responses.BadRequest{
+			HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"},
+		}
 		responseJSON, err := json.Marshal(&response)
 		errors.Check(err)
 		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
@@ -147,14 +153,18 @@ func (c *PetsController) Update(writter http.ResponseWriter, req *http.Request) 
 			c.writeResponse(responseJSON, writter, http.StatusOK)
 
 		} else {
-			response := responses.NotFound{Code: 404, Message: "Pet not found"}
+			response := responses.NotFound{
+				HttpError: responses.HttpError{Code: 404, Message: "Pet not found"},
+			}
 			responseJSON, err := json.Marshal(&response)
 			errors.Check(err)
 			c.writeResponse(responseJSON, writter, http.StatusNotFound)
 		}
 
 	} else {
-		response := responses.BadRequest{Code: 400, Message: "Invalid id"}
+		response := responses.BadRequest{
+			HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"},
+		}
 		responseJSON, err := json.Marshal(&response)
 		errors.Check(err)
 		c.writeResponse(responseJSON, writter, http.StatusBadRequest)

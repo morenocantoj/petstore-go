@@ -17,7 +17,7 @@ import (
 )
 
 // Controllers
-var PetsController = controllers.PetsController{}
+var petsController = controllers.PetsController{}
 
 func welcome(writter http.ResponseWriter, request *http.Request) {
 	fmt.Println("POST /")
@@ -32,11 +32,12 @@ func welcome(writter http.ResponseWriter, request *http.Request) {
 
 func defineRoutes(router *mux.Router) {
 	router.HandleFunc("/", welcome).Methods("GET")
-	router.HandleFunc("/pets", PetsController.Index).Methods("GET")
-	router.HandleFunc("/pets/{id}", PetsController.Show).Methods("GET")
-	router.HandleFunc("/pets/{id}", PetsController.Destroy).Methods("DELETE")
-	router.HandleFunc("/pets/{id}", PetsController.Update).Methods("PATCH")
-	router.HandleFunc("/pets", PetsController.Create).Methods("POST")
+	/* -- Pet -- */
+	router.HandleFunc("/pets", petsController.Index).Methods("GET")
+	router.HandleFunc("/pets/{id}", petsController.Show).Methods("GET")
+	router.HandleFunc("/pets/{id}", petsController.Destroy).Methods("DELETE")
+	router.HandleFunc("/pets/{id}", petsController.Update).Methods("PATCH")
+	router.HandleFunc("/pets", petsController.Create).Methods("POST")
 }
 
 func launchServer(address string, port string) {
@@ -72,7 +73,7 @@ func launchServer(address string, port string) {
 	log.Println("Servidor detenido correctamente")
 }
 
-// Server: Runs a MUX instance to handle client requests
+// Server Runs a MUX instance to handle client requests
 func Server() {
 	fmt.Println("### PetStore API Server ###")
 	fmt.Println("Server launching...")

@@ -1,16 +1,18 @@
 package responses
 
-type BadRequest struct {
+type HttpError struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+}
+
+type BadRequest struct {
+	HttpError
 }
 
 type NotFound struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
+	HttpError
 }
 
 type ServerError struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
+	HttpError
 }
