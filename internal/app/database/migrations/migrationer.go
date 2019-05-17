@@ -9,4 +9,5 @@ func Run() {
 	db := database.Connector{Connection: database.ConnectToDatabase()}
 	defer db.Connection.Close()
 	db.Connection.AutoMigrate(&classes.Pet{})
+	db.Connection.AutoMigrate(&classes.User{})
 }
