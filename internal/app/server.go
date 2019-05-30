@@ -18,6 +18,7 @@ import (
 
 // Controllers
 var petsController = controllers.PetsController{}
+var usersController = controllers.UsersController{}
 
 func welcome(writter http.ResponseWriter, request *http.Request) {
 	fmt.Println("POST /")
@@ -38,6 +39,8 @@ func defineRoutes(router *mux.Router) {
 	router.HandleFunc("/pets/{id}", petsController.Destroy).Methods("DELETE")
 	router.HandleFunc("/pets/{id}", petsController.Update).Methods("PATCH")
 	router.HandleFunc("/pets", petsController.Create).Methods("POST")
+	/* -- User -- */
+	router.HandleFunc("/signup", usersController.Create).Methods("POST")
 }
 
 func launchServer(address string, port string) {

@@ -18,6 +18,7 @@ require (
 	github.com/jinzhu/gorm v1.9.5
 	github.com/kisielk/gotool v1.0.0 // indirect
 	github.com/mdempsky/maligned v0.0.0-20180708014732-6e39bd26a8c8 // indirect
+	github.com/mdempsky/unconvert v0.0.0-20190325185700-2f5dc3378ed3 // indirect
 	github.com/mibk/dupl v1.0.0 // indirect
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
 	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect
