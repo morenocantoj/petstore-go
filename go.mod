@@ -23,7 +23,7 @@ require (
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
 	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect
 	github.com/walle/lll v0.0.0-20160702150637-8b13b3fbf731 // indirect
-	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734 // indirect
+	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
 	golang.org/x/exp v0.0.0-20190429183610-475c5042d3f1 // indirect
 	golang.org/x/image v0.0.0-20190501045829-6d32002ffd75 // indirect
 	golang.org/x/lint v0.0.0-20190409202823-959b441ac422 // indirect
