@@ -9,6 +9,7 @@ require (
 	github.com/alecthomas/gocyclo v0.0.0-20150208221726-aa8f8b160214 // indirect
 	github.com/alexflint/go-arg v1.0.0 // indirect
 	github.com/alexkohler/nakedret v0.0.0-20190321114339-98ae56e4e0f3 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.3.0 // indirect

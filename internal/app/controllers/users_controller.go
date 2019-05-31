@@ -39,7 +39,7 @@ func (u *UsersController) Create(writter http.ResponseWriter, req *http.Request)
 			Code:    201,
 			Message: "User created successfully",
 			User:    newUser.SanitizeForJSON(),
-			UserURL: req.Host + "/Users/" + strconv.FormatInt(newUser.ID, 10),
+			UserURL: req.Host + "/users/" + strconv.FormatInt(newUser.ID, 10),
 		}
 
 		responseJSON, err := json.Marshal(&userCreatedResponse)

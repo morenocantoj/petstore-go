@@ -16,3 +16,7 @@ type NotFound struct {
 type ServerError struct {
 	HttpError
 }
+
+type Forbidden struct {
+	HttpError
+}
