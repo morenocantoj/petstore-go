@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -9,7 +8,6 @@ import (
 	"github.com/morenocantoj/petstore-go/internal/app/database"
 	"github.com/morenocantoj/petstore-go/internal/app/types/classes"
 	"github.com/morenocantoj/petstore-go/internal/app/types/responses"
-	"github.com/morenocantoj/petstore-go/internal/pkg/utils/errors"
 )
 
 // PetsController Defines a user routes controller
@@ -27,12 +25,8 @@ func (u *UsersController) Create(writter http.ResponseWriter, req *http.Request)
 
 	err := db.Connection.Create(&newUser).Error
 	if err != nil {
-		response := responses.BadRequest{
-			HttpError: responses.HttpError{Code: 400, Message: "Invalid email or password"},
-		}
-		responseJSON, err := json.Marshal(&response)
-		errors.Check(err)
-		u.writeResponse(responseJSON, writter, http.StatusBadRequest)
+		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid email or password"}}
+		u.writeResponse(response, writter, http.StatusBadRequest)
 
 	} else {
 		userCreatedResponse := responses.UserCreatedOK{
@@ -41,9 +35,6 @@ func (u *UsersController) Create(writter http.ResponseWriter, req *http.Request)
 			User:    newUser.SanitizeForJSON(),
 			UserURL: req.Host + "/users/" + strconv.FormatInt(newUser.ID, 10),
 		}
-
-		responseJSON, err := json.Marshal(&userCreatedResponse)
-		errors.Check(err)
-		u.writeResponse(responseJSON, writter, http.StatusCreated)
+		u.writeResponse(userCreatedResponse, writter, http.StatusCreated)
 	}
 }

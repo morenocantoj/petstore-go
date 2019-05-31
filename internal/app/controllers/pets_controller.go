@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -31,10 +30,7 @@ func (c *PetsController) Index(writter http.ResponseWriter, req *http.Request) {
 		Pets:         pets,
 		CreatePetURL: req.Host + "/pets",
 	}
-
-	responseJSON, err := json.Marshal(&petsResponse)
-	errors.Check(err)
-	c.writeResponse(responseJSON, writter, http.StatusOK)
+	c.writeResponse(petsResponse, writter, http.StatusOK)
 }
 
 // Show returns a specific pet stored in database
@@ -49,27 +45,17 @@ func (c *PetsController) Show(writter http.ResponseWriter, req *http.Request) {
 		defer db.Connection.Close()
 
 		if db.Connection.Where("id = ?", petID).First(&pet).RecordNotFound() {
-			response := responses.NotFound{
-				HttpError: responses.HttpError{Code: 404, Message: "Pet not found"},
-			}
-			responseJSON, err := json.Marshal(&response)
-			errors.Check(err)
-			c.writeResponse(responseJSON, writter, http.StatusNotFound)
+			response := responses.NotFound{HttpError: responses.HttpError{Code: 404, Message: "Pet not found"}}
+			c.writeResponse(response, writter, http.StatusNotFound)
 
 		} else {
 			response := responses.PetOK{Code: 200, Pet: pet}
-			responseJSON, err := json.Marshal(&response)
-			errors.Check(err)
-			c.writeResponse(responseJSON, writter, http.StatusOK)
+			c.writeResponse(response, writter, http.StatusOK)
 		}
 
 	} else {
-		response := responses.BadRequest{
-			HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"},
-		}
-		responseJSON, err := json.Marshal(&response)
-		errors.Check(err)
-		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
+		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
+		c.writeResponse(response, writter, http.StatusBadRequest)
 	}
 }
 
@@ -90,10 +76,7 @@ func (c *PetsController) Create(writter http.ResponseWriter, req *http.Request) 
 		Pet:     newPet,
 		PetURL:  req.Host + "/pets/" + strconv.FormatInt(newPet.ID, 10),
 	}
-
-	responseJSON, err := json.Marshal(&petCreatedResponse)
-	errors.Check(err)
-	c.writeResponse(responseJSON, writter, http.StatusOK)
+	c.writeResponse(petCreatedResponse, writter, http.StatusOK)
 }
 
 // Destroy an existing pet
@@ -116,17 +99,11 @@ func (c *PetsController) Destroy(writter http.ResponseWriter, req *http.Request)
 			Message: "Pet deleted succesfully",
 			PetsURL: req.Host + "/pets",
 		}
-		responseJSON, err := json.Marshal(&petDestroyedResponse)
-		errors.Check(err)
-		c.writeResponse(responseJSON, writter, http.StatusOK)
+		c.writeResponse(petDestroyedResponse, writter, http.StatusOK)
 
 	} else {
-		response := responses.BadRequest{
-			HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"},
-		}
-		responseJSON, err := json.Marshal(&response)
-		errors.Check(err)
-		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
+		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
+		c.writeResponse(response, writter, http.StatusBadRequest)
 	}
 }
 
@@ -148,25 +125,15 @@ func (c *PetsController) Update(writter http.ResponseWriter, req *http.Request) 
 				Message: "Pet updated successfully",
 				PetsURL: req.Host + "/pets",
 			}
-			responseJSON, err := json.Marshal(&response)
-			errors.Check(err)
-			c.writeResponse(responseJSON, writter, http.StatusOK)
+			c.writeResponse(response, writter, http.StatusOK)
 
 		} else {
-			response := responses.NotFound{
-				HttpError: responses.HttpError{Code: 404, Message: "Pet not found"},
-			}
-			responseJSON, err := json.Marshal(&response)
-			errors.Check(err)
-			c.writeResponse(responseJSON, writter, http.StatusNotFound)
+			response := responses.NotFound{HttpError: responses.HttpError{Code: 404, Message: "Pet not found"}}
+			c.writeResponse(response, writter, http.StatusNotFound)
 		}
 
 	} else {
-		response := responses.BadRequest{
-			HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"},
-		}
-		responseJSON, err := json.Marshal(&response)
-		errors.Check(err)
-		c.writeResponse(responseJSON, writter, http.StatusBadRequest)
+		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
+		c.writeResponse(response, writter, http.StatusBadRequest)
 	}
 }
