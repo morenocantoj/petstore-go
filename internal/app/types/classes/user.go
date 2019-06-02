@@ -37,6 +37,7 @@ func NewUserFromBody(req *http.Request) User {
 	err = json.Unmarshal(body, &newUser)
 	errors.Check(err)
 
+	newUser.Email = ""
 	return newUser
 }
 

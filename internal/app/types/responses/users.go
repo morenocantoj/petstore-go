@@ -10,3 +10,9 @@ type UserCreatedOK struct {
 	User    *classes.User `json:"user"`
 	UserURL string        `json:"user_url"`
 }
+
+type UserUpdatedOK struct {
+	Code     int32  `json:"code"`
+	Message  string `json:"message"`
+	UsersURL string `json:"users_url"`
+}
