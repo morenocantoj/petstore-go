@@ -32,23 +32,23 @@ func (a *AuthController) Create(writter http.ResponseWriter, req *http.Request) 
 	existingUser, err := existsUser(email, db.Connection)
 	if err != nil {
 		response := responses.NotFound{HttpError: responses.HttpError{Code: 404, Message: "User does not exist in our database"}}
-		a.writeResponse(response, writter, http.StatusNotFound)
+		a.WriteResponse(response, writter, http.StatusNotFound)
 
 	} else {
 		if existingUser.CheckPassword(body["password"]) {
 			token, err := auth.CreateJWT(email)
 			if err != nil {
 				response := responses.ServerError{HttpError: responses.HttpError{Code: 500, Message: "Error creating auth token"}}
-				a.writeResponse(response, writter, http.StatusInternalServerError)
+				a.WriteResponse(response, writter, http.StatusInternalServerError)
 
 			} else {
 				response := responses.AuthResponseOK{Code: 200, Message: fmt.Sprintf("User %s logged in successfully", email), Token: token}
-				a.writeResponse(response, writter, http.StatusOK)
+				a.WriteResponse(response, writter, http.StatusOK)
 			}
 
 		} else {
 			response := responses.Forbidden{HttpError: responses.HttpError{Code: 403, Message: "Password not valid"}}
-			a.writeResponse(response, writter, http.StatusNotFound)
+			a.WriteResponse(response, writter, http.StatusNotFound)
 		}
 	}
 }

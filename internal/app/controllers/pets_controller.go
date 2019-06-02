@@ -30,7 +30,7 @@ func (c *PetsController) Index(writter http.ResponseWriter, req *http.Request) {
 		Pets:         pets,
 		CreatePetURL: req.Host + "/pets",
 	}
-	c.writeResponse(petsResponse, writter, http.StatusOK)
+	c.WriteResponse(petsResponse, writter, http.StatusOK)
 }
 
 // Show returns a specific pet stored in database
@@ -46,16 +46,16 @@ func (c *PetsController) Show(writter http.ResponseWriter, req *http.Request) {
 
 		if db.Connection.Where("id = ?", petID).First(&pet).RecordNotFound() {
 			response := responses.NotFound{HttpError: responses.HttpError{Code: 404, Message: "Pet not found"}}
-			c.writeResponse(response, writter, http.StatusNotFound)
+			c.WriteResponse(response, writter, http.StatusNotFound)
 
 		} else {
 			response := responses.PetOK{Code: 200, Pet: pet}
-			c.writeResponse(response, writter, http.StatusOK)
+			c.WriteResponse(response, writter, http.StatusOK)
 		}
 
 	} else {
 		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
-		c.writeResponse(response, writter, http.StatusBadRequest)
+		c.WriteResponse(response, writter, http.StatusBadRequest)
 	}
 }
 
@@ -76,7 +76,7 @@ func (c *PetsController) Create(writter http.ResponseWriter, req *http.Request) 
 		Pet:     newPet,
 		PetURL:  req.Host + "/pets/" + strconv.FormatInt(newPet.ID, 10),
 	}
-	c.writeResponse(petCreatedResponse, writter, http.StatusOK)
+	c.WriteResponse(petCreatedResponse, writter, http.StatusOK)
 }
 
 // Destroy an existing pet
@@ -99,11 +99,11 @@ func (c *PetsController) Destroy(writter http.ResponseWriter, req *http.Request)
 			Message: "Pet deleted succesfully",
 			PetsURL: req.Host + "/pets",
 		}
-		c.writeResponse(petDestroyedResponse, writter, http.StatusOK)
+		c.WriteResponse(petDestroyedResponse, writter, http.StatusOK)
 
 	} else {
 		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
-		c.writeResponse(response, writter, http.StatusBadRequest)
+		c.WriteResponse(response, writter, http.StatusBadRequest)
 	}
 }
 
@@ -125,15 +125,15 @@ func (c *PetsController) Update(writter http.ResponseWriter, req *http.Request) 
 				Message: "Pet updated successfully",
 				PetsURL: req.Host + "/pets",
 			}
-			c.writeResponse(response, writter, http.StatusOK)
+			c.WriteResponse(response, writter, http.StatusOK)
 
 		} else {
 			response := responses.NotFound{HttpError: responses.HttpError{Code: 404, Message: "Pet not found"}}
-			c.writeResponse(response, writter, http.StatusNotFound)
+			c.WriteResponse(response, writter, http.StatusNotFound)
 		}
 
 	} else {
 		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
-		c.writeResponse(response, writter, http.StatusBadRequest)
+		c.WriteResponse(response, writter, http.StatusBadRequest)
 	}
 }

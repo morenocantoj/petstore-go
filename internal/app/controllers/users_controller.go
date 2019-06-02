@@ -26,7 +26,7 @@ func (u *UsersController) Create(writter http.ResponseWriter, req *http.Request)
 	err := db.Connection.Create(&newUser).Error
 	if err != nil {
 		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid email or password"}}
-		u.writeResponse(response, writter, http.StatusBadRequest)
+		u.WriteResponse(response, writter, http.StatusBadRequest)
 
 	} else {
 		userCreatedResponse := responses.UserCreatedOK{
@@ -35,6 +35,6 @@ func (u *UsersController) Create(writter http.ResponseWriter, req *http.Request)
 			User:    newUser.SanitizeForJSON(),
 			UserURL: req.Host + "/users/" + strconv.FormatInt(newUser.ID, 10),
 		}
-		u.writeResponse(userCreatedResponse, writter, http.StatusCreated)
+		u.WriteResponse(userCreatedResponse, writter, http.StatusCreated)
 	}
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var jwtKey = "pineapplejuice"
+var JwtKey = "pineapplejuice"
 
 type Claims struct {
 	Email string
@@ -21,5 +21,14 @@ func CreateJWT(email string) (string, error) {
 		},
 	}
 
-	return jwt.NewWithClaims(jwt.SigningMethodHS256, &claims).SignedString([]byte(jwtKey))
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, &claims).SignedString([]byte(JwtKey))
+}
+
+// VerifyTokenString verifies token string from request parsing it with jwt
+func VerifyTokenString(token string) (*jwt.Token, error) {
+	claims := Claims{}
+	jwtToken, err := jwt.ParseWithClaims(token, &claims, func(tkn *jwt.Token) (interface{}, error) {
+		return []byte(JwtKey), nil
+	})
+	return jwtToken, err
 }

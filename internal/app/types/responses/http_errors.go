@@ -20,3 +20,8 @@ type ServerError struct {
 type Forbidden struct {
 	HttpError
 }
+
+type Unauthorized struct {
+	HttpError
+	LoginURL string `json:"login_url"`
+}

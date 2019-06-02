@@ -12,6 +12,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/morenocantoj/petstore-go/internal/app/controllers"
+	"github.com/morenocantoj/petstore-go/internal/app/controllers/middlewares"
 	"github.com/morenocantoj/petstore-go/internal/app/types/responses"
 	"github.com/morenocantoj/petstore-go/internal/pkg/utils/errors"
 )
@@ -20,6 +21,9 @@ import (
 var petsController = controllers.PetsController{}
 var usersController = controllers.UsersController{}
 var authController = controllers.AuthController{}
+
+// Middlewares
+var authMiddleware = middlewares.AuthMiddleware{}
 
 func welcome(writter http.ResponseWriter, request *http.Request) {
 	fmt.Println("POST /")
@@ -37,11 +41,12 @@ func defineRoutes(router *mux.Router) {
 	/* -- Pet -- */
 	router.HandleFunc("/pets", petsController.Index).Methods("GET")
 	router.HandleFunc("/pets/{id}", petsController.Show).Methods("GET")
-	router.HandleFunc("/pets/{id}", petsController.Destroy).Methods("DELETE")
-	router.HandleFunc("/pets/{id}", petsController.Update).Methods("PATCH")
-	router.HandleFunc("/pets", petsController.Create).Methods("POST")
+	router.HandleFunc("/pets/{id}", authMiddleware.ValidateJWT(petsController.Destroy)).Methods("DELETE")
+	router.HandleFunc("/pets/{id}", authMiddleware.ValidateJWT(petsController.Update)).Methods("PATCH")
+	router.HandleFunc("/pets", authMiddleware.ValidateJWT(petsController.Create)).Methods("POST")
 	/* -- User -- */
 	router.HandleFunc("/signup", usersController.Create).Methods("POST")
+	/* -- Authentication -- */
 	router.HandleFunc("/auth", authController.Create).Methods("POST")
 }
 
