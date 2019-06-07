@@ -25,10 +25,10 @@ func CreateJWT(email string) (string, error) {
 }
 
 // VerifyTokenString verifies token string from request parsing it with jwt
-func VerifyTokenString(token string) (*jwt.Token, error) {
+func VerifyTokenString(token string) (*jwt.Token, Claims, error) {
 	claims := Claims{}
 	jwtToken, err := jwt.ParseWithClaims(token, &claims, func(tkn *jwt.Token) (interface{}, error) {
 		return []byte(JwtKey), nil
 	})
-	return jwtToken, err
+	return jwtToken, claims, err
 }

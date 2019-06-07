@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/context"
 	"github.com/morenocantoj/petstore-go/internal/app/controllers"
 	"github.com/morenocantoj/petstore-go/internal/app/types/auth"
 	"github.com/morenocantoj/petstore-go/internal/app/types/responses"
@@ -25,7 +26,7 @@ func (a *AuthMiddleware) ValidateJWT(next http.HandlerFunc) http.HandlerFunc {
 			a.WriteResponse(response, writter, http.StatusInternalServerError)
 			return
 		}
-		jwtToken, err := auth.VerifyTokenString(tokenString)
+		jwtToken, claims, err := auth.VerifyTokenString(tokenString)
 		if !jwtToken.Valid || err == jwt.ErrSignatureInvalid {
 			response := responses.Unauthorized{
 				HttpError: responses.HttpError{Code: 401, Message: "Token not valid"},
@@ -39,6 +40,7 @@ func (a *AuthMiddleware) ValidateJWT(next http.HandlerFunc) http.HandlerFunc {
 			a.WriteResponse(response, writter, http.StatusInternalServerError)
 			return
 		}
+		context.Set(req, "user", claims.Email)
 		next.ServeHTTP(writter, req)
 	})
 }

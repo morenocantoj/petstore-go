@@ -47,6 +47,7 @@ func defineRoutes(router *mux.Router) {
 	/* -- User -- */
 	router.HandleFunc("/signup", usersController.Create).Methods("POST")
 	router.HandleFunc("/users/{id}", authMiddleware.ValidateJWT(usersController.Update)).Methods("PATCH")
+	router.HandleFunc("/me", authMiddleware.ValidateJWT(usersController.Modify)).Methods("PATCH")
 	/* -- Authentication -- */
 	router.HandleFunc("/auth", authController.Create).Methods("POST")
 }
