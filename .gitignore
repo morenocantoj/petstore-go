@@ -19,6 +19,9 @@
 # Environment
 .env
 
+# Temp files
+tmp/*
+
 
 ### Ignore all binaries
 # Ignore all

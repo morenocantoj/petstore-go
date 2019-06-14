@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/morenocantoj/petstore-go/internal/app/core/manager"
 	"github.com/morenocantoj/petstore-go/internal/app/database"
 	"github.com/morenocantoj/petstore-go/internal/app/types/classes"
 	"github.com/morenocantoj/petstore-go/internal/app/types/responses"
@@ -136,4 +138,47 @@ func (c *PetsController) Update(writter http.ResponseWriter, req *http.Request) 
 		response := responses.BadRequest{HttpError: responses.HttpError{Code: 400, Message: "Invalid ID"}}
 		c.WriteResponse(response, writter, http.StatusBadRequest)
 	}
+}
+
+// Upload a CSV file with pets and classificates them
+func (c *PetsController) Upload(writter http.ResponseWriter, req *http.Request) {
+	fmt.Println("POST /pets/upload")
+
+	// File has to have 10 MB as much
+	req.ParseMultipartForm(10 << 20)
+	file, _, err := req.FormFile("pets_file")
+	if err != nil {
+		response := responses.ServerError{HttpError: responses.HttpError{Code: 500, Message: "Error loading file"}}
+		c.WriteResponse(response, writter, http.StatusInternalServerError)
+		return
+	}
+
+	defer file.Close()
+
+	csvManager := manager.CSVPetsFile{}
+	pets, err := csvManager.StorePets(file)
+	if err != nil && err != io.EOF {
+		response := responses.ServerError{HttpError: responses.HttpError{Code: 500, Message: "Error reading file"}}
+		c.WriteResponse(response, writter, http.StatusInternalServerError)
+		return
+	}
+
+	db := database.Connector{Connection: database.ConnectToDatabase()}
+	defer db.Connection.Close()
+
+	for i := range pets {
+		err = db.Connection.Create(&pets[i]).Error
+		if err != nil {
+			response := responses.ServerError{HttpError: responses.HttpError{Code: 500, Message: "Error creating pets"}}
+			c.WriteResponse(response, writter, http.StatusInternalServerError)
+			return
+		}
+	}
+
+	petsResponse := responses.PetsOK{
+		Code:         200,
+		Pets:         pets,
+		CreatePetURL: req.Host + "/pets",
+	}
+	c.WriteResponse(petsResponse, writter, http.StatusOK)
 }

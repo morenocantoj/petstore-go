@@ -44,6 +44,7 @@ func defineRoutes(router *mux.Router) {
 	router.HandleFunc("/pets/{id}", authMiddleware.ValidateJWT(petsController.Destroy)).Methods("DELETE")
 	router.HandleFunc("/pets/{id}", authMiddleware.ValidateJWT(petsController.Update)).Methods("PATCH")
 	router.HandleFunc("/pets", authMiddleware.ValidateJWT(petsController.Create)).Methods("POST")
+	router.HandleFunc("/pets/upload", authMiddleware.ValidateJWT(petsController.Upload)).Methods("POST")
 	/* -- User -- */
 	router.HandleFunc("/signup", usersController.Create).Methods("POST")
 	router.HandleFunc("/users/{id}", authMiddleware.ValidateJWT(usersController.Update)).Methods("PATCH")

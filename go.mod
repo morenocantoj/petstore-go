@@ -10,7 +10,6 @@ require (
 	github.com/alexflint/go-arg v1.0.0 // indirect
 	github.com/alexkohler/nakedret v0.0.0-20190321114339-98ae56e4e0f3 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.3.0 // indirect
 	github.com/google/pprof v0.0.0-20190502144155-8358a9778bd1 // indirect
@@ -26,7 +25,9 @@ require (
 	github.com/mdempsky/unconvert v0.0.0-20190325185700-2f5dc3378ed3 // indirect
 	github.com/mibk/dupl v1.0.0 // indirect
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
+	github.com/securego/gosec v0.0.0-20190607123315-196edd34b659 // indirect
 	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect
+	github.com/tsenart/deadcode v0.0.0-20160724212837-210d2dc333e9 // indirect
 	github.com/walle/lll v0.0.0-20160702150637-8b13b3fbf731 // indirect
 	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
 	golang.org/x/exp v0.0.0-20190429183610-475c5042d3f1 // indirect

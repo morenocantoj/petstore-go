@@ -25,6 +25,12 @@ const (
 	Sold
 )
 
+var statusDict = map[string]StatusPet{
+	"available": Available,
+	"pending":   Pending,
+	"sold":      Sold,
+}
+
 // NewPetFromBody creates a new Pet from a body request
 func NewPetFromBody(req *http.Request) Pet {
 	// Read body
@@ -37,4 +43,12 @@ func NewPetFromBody(req *http.Request) Pet {
 	errors.Check(err)
 
 	return newPet
+}
+
+func NewPetFromFile(name string, category string, status string) Pet {
+	return Pet{
+		Name:     name,
+		Category: category,
+		Status:   statusDict[status],
+	}
 }
